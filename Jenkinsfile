@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE = "lokeshreddy45/vite-app"
-        DOCKER_TAG = "v1"
+        DOCKER_IMAGE = "yourdockerhubusername/react-vite-app"
+        DOCKER_TAG = "latest"
     }
 
     stages {
@@ -11,13 +11,18 @@ pipeline {
         stage('Git Checkout') {
             steps {
                 git branch: 'main',
+                credentialsId: 'githubtoken',
                 url: 'https://github.com/dodlalokesh/Project_React.git'
             }
         }
 
         stage('Install Dependencies') {
             steps {
-                sh 'npm install'
+                sh '''
+                rm -rf node_modules package-lock.json
+                npm cache clean --force
+                npm install
+                '''
             }
         }
 
