@@ -23,7 +23,7 @@ pipeline {
 
         stage('Build React App') {
             steps {
-                sh 'npm run dev'
+                sh 'npm run build'
             }
         }
 
